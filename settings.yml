@@ -1,0 +1,25 @@
+endpoint:
+  uri: https://127.0.0.1:8443
+  # either...
+  username: developer
+  password: developer
+  # or...
+  # token: xyz
+projects:
+  preserve:
+    - coscale1
+    - default
+    - demo
+    - innovateuk
+    - kube-system
+    - logging
+    - management-infra
+    - openshift
+    - openshift-infra
+    - perf
+    - production
+    - storage-prod
+    - sysint
+    - test
+    - uat
+max_age_in_hours: 48

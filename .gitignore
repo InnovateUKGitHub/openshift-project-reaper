@@ -1,0 +1,6 @@
+.vagrant/
+*.retry
+.DS_Store
+venv/
+ignore/**
+.idea/
