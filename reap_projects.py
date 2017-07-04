@@ -17,10 +17,10 @@ with open("settings.yml", 'r') as stream:
 if data['endpoint'].has_key('token'):
     print "Attempting to auth using token..."
     print "--token={}".format(data['endpoint']['token'])
-    result = subprocess.check_output(['oc', 'login', data['endpoint']['uri'], "--token={}".format(data['endpoint']['token'])])
+    result = subprocess.check_output(['oc', 'login', data['endpoint']['options'] if data['endpoint'].has_key('options') else '', data['endpoint']['uri'], "--token={}".format(data['endpoint']['token'])])
 else:
     print "Attempting to auth using username & password..."
-    result = subprocess.check_output(['oc', 'login', '-u', data['endpoint']['username'], '-p', data['endpoint']['password'], data['endpoint']['uri']])
+    result = subprocess.check_output(['oc', 'login', '-u', data['endpoint']['username'], '-p', data['endpoint']['password'], data['endpoint']['options'] if data['endpoint'].has_key('options') else '', data['endpoint']['uri']])
 print result
 
 config.load_kube_config()

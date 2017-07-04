@@ -3,6 +3,7 @@ endpoint:
   # either...
   username: developer
   password: developer
+  options: --insecure-skip-tls-verify
   # or...
   # token: xyz
 projects:

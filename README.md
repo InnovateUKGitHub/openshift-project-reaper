@@ -37,6 +37,7 @@ There are only a few supported keys at present:
   - `endpoint.username: ""` set the username to use for Authentication
   - `endpoint.password: ""` set the password to go with the username
   - `endpoint.token:` set this to use token auth instead of username & password
+  - `endpoint.options:` any additional parameters for the `oc login` command, eg. `--insecure-skip-tls-verify`
   - `projects.preserve: []` is a list of project to whitelist (ie. never delete these regardless of age)
   - `max_age_in_hours: 48` set this to the age threshold you would like, ie. projects older than this will be deleted, so long as they are not in the `preserve` list
 
