@@ -37,7 +37,7 @@ for project in project_list.items:
     else:
         print "Project {} was created {}".format(project.metadata.name,project.metadata.creation_timestamp)
         if project_createtime < now - timedelta(hours = max_age_in_hours):
-            print "  DELETING {} AS IT IS OLDER THAN {} HOURS".format(project.metadata.name,max_age_in_hours)
+            print "  REAPING {} AS IT IS OLDER THAN {} HOURS".format(project.metadata.name,max_age_in_hours)
             oapi.delete_project(project.metadata.name)
         else:
             print "  Young enough to survive the reaper"
