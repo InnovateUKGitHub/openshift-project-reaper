@@ -48,11 +48,18 @@ project_list     = oapi.list_project()
 now              = datetime.utcnow()
 default_max_age_in_hours = data['default_max_age_in_hours']
 
+filtered_projects = []
 for project in project_list.items:
-    project_createtime = datetime.strptime(project.metadata.creation_timestamp, '%Y-%m-%dT%H:%M:%SZ')
     if project.metadata.name in data['projects']['preserve']:
         print "Project {} is whitelisted and will not be deleted".format(project.metadata.name)
-    elif matching_rule(project.metadata.name) is not None:
+    else:
+        filtered_projects.append(project)
+
+print "\n"
+
+for project in filtered_projects:
+    project_createtime = datetime.strptime(project.metadata.creation_timestamp, '%Y-%m-%dT%H:%M:%SZ')
+    if matching_rule(project.metadata.name) is not None:
         process_project(project, matching_rule(project.metadata.name)['max_age_in_hours'])
     else:
         process_project(project, default_max_age_in_hours)
