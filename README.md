@@ -48,7 +48,7 @@ I created a series of projects locally and then used the `max_age_in_hours` set 
 
 Test doing something like this:
 
-- Modify `projects.yml` to have a short `max_age_in_hours`:
+- Modify `settings.yml` to have a short `default_max_age_in_hours`:
 
 ```yaml
 endpoint:
@@ -56,6 +56,7 @@ endpoint:
   # either...
   username: developer
   password: developer
+  options: --insecure-skip-tls-verify
   # or...
   # token: xyz
 projects:
@@ -75,7 +76,10 @@ projects:
     - sysint
     - test
     - uat
-max_age_in_hours: 1
+  rules:
+    - project: "^at-.*"
+      max_age_in_hours: 18
+default_max_age_in_hours: 48
 ```
 
 - Run the following commands:
