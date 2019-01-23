@@ -29,7 +29,7 @@ def process_project(project, max_age_in_hours):
         print "  REAPING {} AS IT IS OLDER THAN {} HOURS".format(
             project.metadata.name, max_age_in_hours)
         try:
-            oapi.api_response = oapi.delete_project(project.metadata.name)
+            api_response = oapi.delete_project(project.metadata.name)
             pprint(api_response)
         except ApiException as e:
             print("Exception when trying to delete project: %s\n" % e)
