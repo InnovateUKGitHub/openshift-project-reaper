@@ -27,3 +27,7 @@ projects:
     - project: "^at-.*"
       max_age_in_hours: 18
 default_max_age_in_hours: 48
+prune:
+  builds: "--orphans --keep-complete=5 --keep-failed=1 --keep-younger-than=24h --confirm"
+  deployments: "--orphans --keep-complete=5 --keep-failed=1 --keep-younger-than=24h --confirm"
+  images: "--keep-tag-revisions=3 --keep-younger-than=24h   --registry-url=https://docker-registry --confirm"

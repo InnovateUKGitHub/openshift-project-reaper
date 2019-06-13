@@ -1,10 +1,12 @@
 # openshift-project-reaper
 
-This tool can auto-delete up openshift projects that are older than a specific age.  A list of projects to retain can also be specified.
+This tool can:
 
+- auto-delete OpenShift projects that are older than a specific age.  A list of projects to retain can also be specified.
+
+- auto-prune OpenShit builds, deployments and images.
 
 ## Preparation
-
 
 ### On Linux
 
@@ -14,7 +16,6 @@ virtualenv venv
 . bin/venv/activate
 pip install -r requirements.txt
 ```
-
 
 ### On OSX
 
@@ -28,19 +29,29 @@ virtualenv -p/usr/local/bin/python venv
 pip install -r requirements.txt
 ```
 
-
 ## YAML Settings
 
 There are only a few supported keys at present:
 
-  - `enpoint.uri: ""` set this to point to the openshift instance endpoint
-  - `endpoint.username: ""` set the username to use for Authentication
-  - `endpoint.password: ""` set the password to go with the username
-  - `endpoint.token:` set this to use token auth instead of username & password
-  - `endpoint.options:` any additional parameters for the `oc login` command, eg. `--insecure-skip-tls-verify`
-  - `projects.preserve: []` is a list of project to whitelist (ie. never delete these regardless of age)
-  - `max_age_in_hours: 48` set this to the age threshold you would like, ie. projects older than this will be deleted, so long as they are not in the `preserve` list
+- `enpoint.uri: ""` set this to point to the openshift instance endpoint
 
+- `endpoint.username: ""` set the username to use for Authentication
+
+- `endpoint.password: ""` set the password to go with the username
+
+- `endpoint.token:` set this to use token auth instead of username & password
+
+- `endpoint.options:` any additional parameters for the `oc login` command, eg. `--insecure-skip-tls-verify`
+
+- `projects.preserve: []` is a list of project to whitelist (ie. never delete these regardless of age)
+
+- `default_max_age_in_hours: 48` set this to the age threshold you would like, ie. projects older than this will be deleted, so long as they are not in the `preserve` list
+
+- `projects.rules: []` An array of hashes that can be used to match projects to DELETE based on a regex match and age threshhold. See below for details:
+
+  - `projects.rules: [].max_age_in_hours: 48` set this to the age threshold you would like, ie. projects older than this will be deleted, so long as they are not in the `preserve` list
+
+  - `projects.rules: [].project: <regex>` set this to the age threshold you would like, ie. projects older than this will be deleted, so long as they are not in the `preserve` list
 
 ## Testing
 
@@ -80,6 +91,10 @@ projects:
     - project: "^at-.*"
       max_age_in_hours: 18
 default_max_age_in_hours: 48
+prune:
+  builds: "--orphans --keep-complete=5 --keep-failed=1 --keep-younger-than=24h --confirm"
+  deployments: "--orphans --keep-complete=5 --keep-failed=1 --keep-younger-than=24h --confirm"
+  images: "--keep-tag-revisions=3 --keep-younger-than=24h   --registry-url=https://docker-registry --confirm"
 ```
 
 - Run the following commands:

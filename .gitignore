@@ -4,3 +4,4 @@
 venv/
 ignore/**
 .idea/
+.vscode/
